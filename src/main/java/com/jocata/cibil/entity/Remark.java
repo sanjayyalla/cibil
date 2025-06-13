@@ -10,7 +10,7 @@ public class Remark {
     private Integer remarkId;
 
     @ManyToOne
-    @JoinColumn(name = "report_id")
+    @JoinColumn(name = "report_id", referencedColumnName = "report_id")
     private CreditReport creditReport;
 
     @Column(name = "description",columnDefinition = "TEXT")

@@ -13,6 +13,7 @@ public class CreditReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
     private Integer reportId;
+
     @Column(name = "generated_on")
     private LocalDate generatedOn;
 

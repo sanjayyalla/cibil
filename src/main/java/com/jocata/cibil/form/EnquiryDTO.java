@@ -1,46 +1,13 @@
-package com.jocata.cibil.entity;
-
-import jakarta.persistence.*;
+package com.jocata.cibil.form;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "enquiries")
-public class Enquiry {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enquiry_id")
-    private Integer enquiryId;
-
-    @ManyToOne
-    @JoinColumn(name = "report_id", referencedColumnName = "report_id")
-    private CreditReport creditReport;
-
-    @Column(name = "enquiry_date")
+public class EnquiryDTO {
     private LocalDate enquiryDate;
-    @Column(name = "member_name")
     private String memberName;
-    @Column(name = "enquiry_purpose")
     private String enquiryPurpose;
-    @Column(name = "enquiry_amount")
     private BigDecimal enquiryAmount;
-
-    public Integer getEnquiryId() {
-        return enquiryId;
-    }
-
-    public void setEnquiryId(Integer enquiryId) {
-        this.enquiryId = enquiryId;
-    }
-
-    public CreditReport getCreditReport() {
-        return creditReport;
-    }
-
-    public void setCreditReport(CreditReport creditReport) {
-        this.creditReport = creditReport;
-    }
 
     public LocalDate getEnquiryDate() {
         return enquiryDate;

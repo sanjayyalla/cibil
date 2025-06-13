@@ -1,63 +1,22 @@
-package com.jocata.cibil.entity;
-import jakarta.persistence.*;
+package com.jocata.cibil.form;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
-@Table(name = "accounts")
-public class Account {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
-    private Integer accountId;
-
-    @ManyToOne
-    @JoinColumn(name = "report_id", referencedColumnName = "report_id")
-    private CreditReport creditReport;
-
-    @Column(name = "account_number")
+public class AccountDTO {
     private String accountNumber;
-    @Column(name = "account_type")
     private String accountType;
-    @Column(name = "member_name")
     private String memberName;
-    @Column(name = "ownership")
     private String ownership;
-    @Column(name = "date_opened")
     private Date dateOpened;
-    @Column(name = "last_payment_date")
     private Date lastPaymentDate;
-    @Column(name = "current_balance")
     private BigDecimal currentBalance;
-    @Column(name = "credit_limit")
     private BigDecimal creditLimit;
-    @Column(name = "sanctioned_amount")
     private BigDecimal sanctionedAmount;
-    @Column(name = "EMI_amount")
     private BigDecimal emiAmount;
-    @Column(name = "tenure_months")
     private Integer tenureMonths;
-    @Column(name = "payment_history")
     private String paymentHistory;
-    @Column(name = "account_status")
     private String accountStatus;
-
-    public Integer getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public CreditReport getCreditReport() {
-        return creditReport;
-    }
-
-    public void setCreditReport(CreditReport creditReport) {
-        this.creditReport = creditReport;
-    }
 
     public String getAccountNumber() {
         return accountNumber;

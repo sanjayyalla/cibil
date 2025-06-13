@@ -14,7 +14,7 @@ public class CibilScore {
     private Integer scoreId;
 
     @OneToOne
-    @JoinColumn(name = "report_id")
+    @JoinColumn(name = "report_id", referencedColumnName = "report_id")
     private CreditReport creditReport;
 
     @Column(name = "score")
