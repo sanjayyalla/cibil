@@ -1,3 +1,4 @@
+drop database cibil;
 CREATE DATABASE cibil;
 use cibil;
 
@@ -72,3 +73,7 @@ CREATE TABLE Remarks (
     description TEXT,
     FOREIGN KEY (report_id) REFERENCES creditReport(report_id)
 );
+
+ALTER TABLE Accounts 
+    MODIFY date_opened DATETIME(6),
+    MODIFY last_payment_date DATETIME(6);

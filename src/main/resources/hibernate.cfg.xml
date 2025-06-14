@@ -8,5 +8,14 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">validate</property>
+
+        <mapping class="com.jocata.cibil.entity.Account"/>
+        <mapping class="com.jocata.cibil.entity.Address"/>
+        <mapping class="com.jocata.cibil.entity.Customer"/>
+        <mapping class="com.jocata.cibil.entity.CibilScore"/>
+        <mapping class="com.jocata.cibil.entity.CreditReport"/>
+        <mapping class="com.jocata.cibil.entity.Enquiry"/>
+        <mapping class="com.jocata.cibil.entity.Remark"/>
+
     </session-factory>
 </hibernate-configuration>

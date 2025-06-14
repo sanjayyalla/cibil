@@ -3,8 +3,8 @@ package com.jocata.cibil.form;
 public class AddressDTO {
     private String line;
     private String city;
-    private String state;
-    private String pincode;
+    private String street;
+    private Integer pincode;
 
 
     public String getLine() {
@@ -23,19 +23,19 @@ public class AddressDTO {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public String getStreet() {
+        return street;
     }
 
-    public String getPincode() {
+    public Integer getPincode() {
         return pincode;
     }
 
-    public void setPincode(String pincode) {
+    public void setPincode(Integer pincode) {
         this.pincode = pincode;
     }
 }
