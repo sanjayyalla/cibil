@@ -41,6 +41,10 @@ public class CreditReportServiceImpl implements CreditReportService {
     @Override
     public CreditReportDTO getCreditReportByPan(String panNumber) {
 
+        CreditReport returnedEntity = reportDao.getCreditReportByPan(panNumber);
+        CreditReportDTO transformedEntity = entityToDTO(returnedEntity);
+        return transformedEntity;
+
 
     }
 
