@@ -66,4 +66,14 @@ public class CreditReportDaoImpl implements CreditReportDao {
         session.close();
         return report;
     }
+
+    @Override
+    public CreditReport updateCreditReport(CreditReport creditReport) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.merge(creditReport);
+        tx.commit();
+        session.close();
+        return creditReport;
+    }
 }

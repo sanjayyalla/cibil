@@ -7,7 +7,6 @@ import com.jocata.cibil.service.CreditReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +19,89 @@ public class CreditReportServiceImpl implements CreditReportService {
 
     @Override
     public CreditReportDTO createCreditReport(CreditReportDTO form) {
-        CreditReport report = new CreditReport();
-        report.setGeneratedOn(LocalDate.now());
-        Customer customer = setCustomer(form.getCustomer(), report);
-        report.setCustomer(customer);
-        CibilScore cibilScore = setCibilScore(form.getCibilScore(), report);
-        report.setCibilScore(cibilScore);
-        List<Account> accountsList = setAccounts(form.getAccounts(), report);
-        report.setAccounts(accountsList);
-        List<Enquiry> enquiryList = setEnquiries(form.getEnquiries(), report);
-        report.setEnquiries(enquiryList);
-        List<Remark> remarkList = setRemarks(form.getRemarks(), report);
-        report.setRemarks(remarkList);
+        CreditReport existing = reportDao.getCreditReportByPan(form.getCustomer().getPanNumber());
+        if (existing == null) {
+            CreditReport report = new CreditReport();
+            report.setGeneratedOn(LocalDate.now());
+            Customer customer = setCustomer(form.getCustomer(), report);
+            report.setCustomer(customer);
+            CibilScore cibilScore = setCibilScore(form.getCibilScore(), report);
+            report.setCibilScore(cibilScore);
+            List<Account> accountsList = setAccounts(form.getAccounts(), report);
+            report.setAccounts(accountsList);
+            List<Enquiry> enquiryList = setEnquiries(form.getEnquiries(), report);
+            report.setEnquiries(enquiryList);
+            List<Remark> remarkList = setRemarks(form.getRemarks(), report);
+            report.setRemarks(remarkList);
 
-        CreditReport returnedEntity = reportDao.createCreditReport(report);
-        CreditReportDTO transformedEntity = entityToDTO(returnedEntity);
-        return transformedEntity;
+            CreditReport returnedEntity = reportDao.createCreditReport(report);
+            CreditReportDTO transformedEntity = entityToDTO(returnedEntity);
+            return transformedEntity;
+        } else {
+            Customer existingCustomer = existing.getCustomer();
+
+            if (existingCustomer != null && existingCustomer.getAddress() != null
+                    && form.getCustomer() != null && form.getCustomer().getAddress() != null) {
+                Address existingAddress = existingCustomer.getAddress();
+                AddressDTO newAddress = form.getCustomer().getAddress();
+                existingAddress.setLine(newAddress.getLine());
+                existingAddress.setCity(newAddress.getCity());
+                existingAddress.setStreet(newAddress.getStreet());
+                existingAddress.setPincode(newAddress.getPincode());
+            }
+
+            if (form.getAccounts() != null) {
+                List<Account> accounts = new ArrayList<>();
+                for (AccountDTO accountDTO : form.getAccounts()) {
+                    Account account = new Account();
+                    account.setCreditReport(existing);
+                    account.setAccountNumber(accountDTO.getAccountNumber());
+                    account.setAccountType(accountDTO.getAccountType());
+                    account.setMemberName(accountDTO.getMemberName());
+                    account.setOwnership(accountDTO.getOwnership());
+                    account.setDateOpened(accountDTO.getDateOpened());
+                    account.setLastPaymentDate(accountDTO.getLastPaymentDate());
+                    account.setCurrentBalance(accountDTO.getCurrentBalance());
+                    account.setCreditLimit(accountDTO.getCreditLimit());
+                    account.setSanctionedAmount(accountDTO.getSanctionedAmount());
+                    account.setEmiAmount(accountDTO.getEmiAmount());
+                    account.setTenureMonths(accountDTO.getTenureMonths());
+                    account.setPaymentHistory(accountDTO.getPaymentHistory());
+                    account.setAccountStatus(accountDTO.getAccountStatus());
+                    accounts.add(account);
+                }
+                existing.setAccounts(accounts);
+            }
+            if (form.getEnquiries() != null) {
+
+                List<Enquiry> enquiryList = new ArrayList<>();
+                for (EnquiryDTO enquiryDTO : form.getEnquiries()) {
+                    Enquiry enquiry = new Enquiry();
+                    enquiry.setCreditReport(existing);
+                    enquiry.setEnquiryDate(enquiryDTO.getEnquiryDate());
+                    enquiry.setMemberName(enquiryDTO.getMemberName());
+                    enquiry.setEnquiryPurpose(enquiryDTO.getEnquiryPurpose());
+                    enquiry.setEnquiryAmount(enquiryDTO.getEnquiryAmount());
+
+                    enquiryList.add(enquiry);
+                }
+                existing.setEnquiries(enquiryList);
+            }
+
+            if (!form.getRemarks().isEmpty()) {
+                List<Remark> remarkList = new ArrayList<>();
+                for (String str : form.getRemarks()) {
+                    Remark remark = new Remark();
+                    remark.setDescription(str);
+                    remark.setCreditReport(existing);
+                    remarkList.add(remark);
+                }
+                existing.setRemarks(remarkList);
+            }
+            CreditReport returnedEntity = reportDao.updateCreditReport(existing);
+            CreditReportDTO transformedEntity = entityToDTO(returnedEntity);
+            return transformedEntity;
+        }
     }
 
     @Override

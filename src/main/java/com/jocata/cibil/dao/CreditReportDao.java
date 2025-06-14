@@ -6,4 +6,6 @@ public interface CreditReportDao {
     CreditReport createCreditReport(CreditReport report);
 
     CreditReport getCreditReportByPan(String panNumber);
+
+    CreditReport updateCreditReport(CreditReport creditReport);
 }
