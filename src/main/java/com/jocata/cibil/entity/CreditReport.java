@@ -26,7 +26,7 @@ public class CreditReport {
     @OneToMany(mappedBy = "creditReport", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "creditReport", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "creditReport", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enquiry> enquiries;
 
     @OneToMany(mappedBy = "creditReport", cascade = CascadeType.ALL)

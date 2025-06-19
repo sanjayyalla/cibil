@@ -32,7 +32,7 @@ public class Customer {
     @Column(name = "aadhaar")
     private String aadhaar;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
 
     public Integer getCustomerId() {

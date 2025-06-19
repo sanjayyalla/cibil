@@ -1,0 +1,85 @@
+credit_reports
+customers
+addresses
+cibil_scores
+accounts
+enquiries
+remarks
+
+Relations-------------
+
+credit_reports -> customer(one to one)
+
+customers -> address(one to one)
+
+one credit_report -> many accounts, enquiries and remarks
+
+one crerdit_report -> one cibil_scores
+
+
+1. Credit report table
+
+	report_id INT (PK)
+	generated_on Date
+2. Customers
+
+	customer_id int (PK)
+	report_id int (FK in credit report table)
+	full_name varchar
+	dob	date
+	gender	varchar
+	pan	varchar
+	mobile  varchar
+	email   varchar
+	aadhar  varchar
+
+3. addresses
+	
+	address_id int (PK)
+	customer_id int (FK)
+	line	varchar	
+	street	varchar
+	city	varchar
+	state	varchar
+	pincode	int
+
+4. Cibil_scores
+	
+	score_id	int PK
+	report_id	int FK
+	score		
+	score_date
+	risk_grade
+
+5. accounts
+	
+	account_id	int PK
+	report_id	int FK
+	account_number
+	account_type
+	member_name
+	ownership
+	date_opened
+	last_payment_date
+	current_balance
+	credit_limit
+	sanctioned_amount
+	emi_amount
+	tenure_months
+	payment_history
+	account_status
+
+6. enquiries
+	enquiry_id	int PK
+	report_id	int FK
+	enquiry_date
+	member_name
+	enquiry_purpose
+	enquiry_amount
+
+7. remarks
+	remark_id	int PK
+	report_id 	int FK
+	desc 		varchar
+	
+	
