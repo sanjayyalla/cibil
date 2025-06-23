@@ -12,6 +12,7 @@ public class CreditReportDTO {
     private List<EnquiryDTO> enquiries;
     private List<String> remarks;
 
+
     public LocalDate getGeneratedOn() {
         return generatedOn;
     }

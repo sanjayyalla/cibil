@@ -16,8 +16,7 @@ public class CreditReportController {
     public CreditReportDTO createCreditReport(@RequestBody CreditReportDTO report) {
         CreditReportDTO response = null;
         try {
-            if (report.getCustomer() != null && report.getAccounts() != null && report.getCibilScore() != null
-                    && report.getEnquiries() != null && report.getRemarks() != null) {
+            if (report.getCustomer().getPanNumber()!=null) {
                 response = service.createCreditReport(report);
                 if (response != null) {
                     return response;

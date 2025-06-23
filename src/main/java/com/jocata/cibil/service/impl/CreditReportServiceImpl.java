@@ -88,15 +88,17 @@ public class CreditReportServiceImpl implements CreditReportService {
                 existing.setEnquiries(enquiryList);
             }
 
-            if (!form.getRemarks().isEmpty()) {
-                List<Remark> remarkList = new ArrayList<>();
-                for (String str : form.getRemarks()) {
-                    Remark remark = new Remark();
-                    remark.setDescription(str);
-                    remark.setCreditReport(existing);
-                    remarkList.add(remark);
+            if (form.getRemarks() != null) {
+                if (!form.getRemarks().isEmpty()) {
+                    List<Remark> remarkList = new ArrayList<>();
+                    for (String str : form.getRemarks()) {
+                        Remark remark = new Remark();
+                        remark.setDescription(str);
+                        remark.setCreditReport(existing);
+                        remarkList.add(remark);
+                    }
+                    existing.setRemarks(remarkList);
                 }
-                existing.setRemarks(remarkList);
             }
             CreditReport returnedEntity = reportDao.updateCreditReport(existing);
             CreditReportDTO transformedEntity = entityToDTO(returnedEntity);
